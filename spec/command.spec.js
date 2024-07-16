@@ -10,3 +10,21 @@ describe("Command class", function() {
   });
 
 });
+
+describe("Command class", function() {
+
+  it("constructor sets command type", function() {
+    let testCommand = new Command("type", "dummy");
+    expect(testCommand.commandType).toBe("type");
+  });
+
+});
+
+describe("Command class", function() {
+
+  it("constructor sets command type", function() {
+    let testCommand = new Command("type", "dummy");
+    expect(testCommand.commandType).toBe("type");
+  });
+
+});
