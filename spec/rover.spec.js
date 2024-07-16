@@ -54,6 +54,11 @@ describe("Rover class", function() {
 
   //10
   it("responds correctly to the status check command", function() {
+    let testRover = new Rover(1);
+    let commands = [new Command('STATUS_CHECK')];
+    let message = new Message('Test STATUS_CHECK', commands);
+
+    expect(testRover.receiveMessage(message).results).toStrictEqual([{completed: true, roverStatus: {mode: testRover.mode, generatorWatts: testRover.generatorWatts, position: testRover.position}}]);
   
   });
 
