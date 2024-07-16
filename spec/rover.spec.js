@@ -64,17 +64,52 @@ describe("Rover class", function() {
 
   //11
   it("responds correctly to the mode change command", function() {
-  
+    let testRover = new Rover(1);
+    expect(testRover.mode).toBe("NORMAL");
+
+    let commands = [new Command('MODE_CHANGE', 'LOW_POWER')];
+    let message = new Message('Test MODE_CHANGE', commands);
+    testRover.receiveMessage(message);
+    expect(testRover.mode).toBe("LOW_POWER");
+    expect(testRover.receiveMessage(message).results).toStrictEqual([{completed: true}])
+
+
+    commands = [new Command('MODE_CHANGE', 'NORMAL')];
+    message = new Message('Test MODE_CHANGE', commands);
+    testRover.receiveMessage(message);
+    expect(testRover.mode).toBe("NORMAL");
+    expect(testRover.receiveMessage(message).results).toStrictEqual([{completed: true}])
+
+    commands = [new Command('MODE_CHANGE', 'NOT_A_VALID_STATUS')];
+    message = new Message('Test MODE_CHANGE to invalid status', commands);
+    testRover.receiveMessage(message);
+    expect(testRover.mode).toBe("NORMAL");
+    expect(testRover.receiveMessage(message).results).toStrictEqual([{completed: false}])
   });
 
   //12
   it("responds with a false completed value when attempting to move in LOW_POWER mode", function() {
-  
+    let testRover = new Rover(1);
+    let commands = [new Command('MODE_CHANGE', 'LOW_POWER'), new Command('MOVE', 254)];
+    let message = new Message('Test MOVE in LOW_POWER mode', commands);
+    testRover.receiveMessage(message);
+    //this will allow me to take only the last element to check for the completed status
+    let lastMessage = testRover.receiveMessage(message).results.pop()
+    expect(lastMessage).toStrictEqual({completed: false})
+    expect(testRover.position).toBe(1);
+
+
   });
 
   //13
   it("responds with the position for the move command", function() {
-  
+    let testRover = new Rover(1);
+    expect(testRover.position).toBe(1);
+
+    let commands = [new Command('MOVE', 245)];
+    let message = new Message('Test MOVE change position', commands);
+    testRover.receiveMessage(message);
+    expect(testRover.position).toBe(245);
   });
 
 
