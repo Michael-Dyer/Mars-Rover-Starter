@@ -9,22 +9,17 @@ describe("Command class", function() {
     expect( function() { new Command();}).toThrow(new Error('Command type required.'));
   });
 
-});
-
-describe("Command class", function() {
 
   it("constructor sets command type", function() {
     let testCommand = new Command("type", "dummy");
     expect(testCommand.commandType).toBe("type");
   });
 
-});
-
-describe("Command class", function() {
-
-  it("constructor sets command type", function() {
+  it("constructor sets a value passed in as the 2nd argument", function() {
     let testCommand = new Command("type", "dummy");
-    expect(testCommand.commandType).toBe("type");
+    expect(testCommand.value).toBe("dummy");
   });
 
+
 });
+
